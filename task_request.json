@@ -1,0 +1,53 @@
+{
+    "id": 373074,
+    "task_params": {
+        "scan_languages": [
+            "cpp"
+        ],
+        "rules": [
+            "PACKAGE_SIZE_LIMIT",
+            "JS_COMPRESS_OPEN",
+            "WXML_COMPRESS_OPEN",
+            "WXSS_COMPRESS_OPEN",
+            "LAZYCODE_LOADING_OPEN",
+            "IMAGE_AND_AUDIO_LIMIT",
+            "CONTAINS_OTHER_PKG_JS",
+            "CONTAINS_OTHER_PKG_COMPONENTS",
+            "CONTAINS_UNUSED_PLUGINS",
+            "CONTAINS_UNUSED_COMPONENTS",
+            "CONTAINS_UNUSED_CODES"
+        ],
+        "rule_list": [
+            {
+                "category": 8,
+                "gid": 4388,
+                "severity": 2,
+                "tool_name": "phpcs",
+                "name": "shorten-64-to-32"
+            },
+            {
+                "category": 8,
+                "gid": 4390,
+                "severity": 2,
+                "tool_name": "phpcs",
+                "name": "objc-method-access"
+            }
+        ],
+        "path_filters": {
+            "exclusion": [],
+            "inclusion": [],
+            "re_exclusion": []
+        },
+        "envs": {},
+        "pre_cmd": "",
+        "build_cmd": "",
+        "incr_scan": false
+    },
+    "task_name": "flawfinder",
+    "create_time": "2019-08-19T15:46:41+08:00",
+    "execute_processes": [
+        "analyze",
+        "datahandle"
+    ],
+    "task_dir": "/src/codedog/data/taskdirs/task_3"
+}
