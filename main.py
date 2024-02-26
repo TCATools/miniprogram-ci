@@ -48,9 +48,8 @@ class MiniprogramCI(object):
         result_path = os.path.join(work_dir, "result.json")
         error_output = os.path.join(work_dir, "error.json")
 
-        node_home = os.environ.get("NODE_HOME", None)
         cmd = [
-            os.path.join(node_home, "bin", "miniprogram-ci"),
+            "miniprogram-ci",
             "check-code-quality",
             "--appid",
             "wxsomeappid",
