@@ -5,13 +5,11 @@ miniprogram-ci: 微信小程序质量扫描工具
 用法: python3 main.py
 """
 
-# 2024-01-19    kylinye    created
 
 import copy
 import os
 import json
 import subprocess
-import shutil
 
 PACKAGE_SIZE_RULES = ["PACKAGE_SIZE_LIMIT"]
 CONTAINS_OTHER_RULES = ["CONTAINS_OTHER_PKG_JS", "CONTAINS_OTHER_PKG_COMPONENTS"]
@@ -23,7 +21,6 @@ class MiniprogramCI(object):
         :return:
         """
         task_request_file = os.environ.get("TASK_REQUEST")
-        # task_request_file = "task_request.json"
         with open(task_request_file, "r") as rf:
             task_request = json.load(rf)
         task_params = task_request["task_params"]
@@ -36,7 +33,6 @@ class MiniprogramCI(object):
         """
         # 代码目录直接从环境变量获取
         source_dir = os.environ.get("SOURCE_DIR", None)
-        # source_dir = "/Users/kylinye/Workspace/UGit/tools/miniprogram-ci/wxapp-2048-master"
         print("[debug] source_dir: %s" % source_dir)
         # 其他参数从task_request.json文件获取
         task_params = self.__get_task_params()
@@ -44,12 +40,12 @@ class MiniprogramCI(object):
         rules = task_params["rules"]
 
         result = []
-        results_dir = "results/"
-        if os.path.exists(results_dir):
-            shutil.rmtree(results_dir)
-        os.mkdir(results_dir)
-        result_path = os.path.join(results_dir, "result.json")
-        error_output = os.path.join(results_dir, "error.json")
+        result_path = "result.json"
+        error_output = "error.json"
+        if os.path.exists(result_path):
+            os.remove(result_path)
+        if os.path.exists(error_output):
+            os.remove(error_output)
 
         cmd = [
             "miniprogram-ci",
@@ -75,7 +71,7 @@ class MiniprogramCI(object):
             with open(error_output, "r") as f:
                 outputs_data = json.load(f)
         except:
-            print("[error] 结果文件未找到或无法加载，返回空结果")
+            print("[error] Resulting file not found or cannot be loaded, return none")
             with open(result_path, "w") as fp:
                 json.dump(result, fp, indent=2)
             return
