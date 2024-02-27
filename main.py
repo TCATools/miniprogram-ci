@@ -34,18 +34,15 @@ class MiniprogramCI(object):
         # 代码目录直接从环境变量获取
         source_dir = os.environ.get("SOURCE_DIR", None)
         print("[debug] source_dir: %s" % source_dir)
+        work_dir = os.environ.get("RESULT_DIR", None)
         # 其他参数从task_request.json文件获取
         task_params = self.__get_task_params()
         # 规则
         rules = task_params["rules"]
 
         result = []
-        result_path = "result.json"
-        error_output = "error.json"
-        if os.path.exists(result_path):
-            os.remove(result_path)
-        if os.path.exists(error_output):
-            os.remove(error_output)
+        result_path = os.path.join(work_dir, "result.json")
+        error_output = os.path.join(work_dir, "error.json")
 
         cmd = [
             "miniprogram-ci",
