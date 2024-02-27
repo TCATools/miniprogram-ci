@@ -11,6 +11,7 @@ import copy
 import os
 import json
 import subprocess
+import shutil
 
 PACKAGE_SIZE_RULES = ["PACKAGE_SIZE_LIMIT"]
 CONTAINS_OTHER_RULES = ["CONTAINS_OTHER_PKG_JS", "CONTAINS_OTHER_PKG_COMPONENTS"]
@@ -36,8 +37,6 @@ class MiniprogramCI(object):
         # 代码目录直接从环境变量获取
         source_dir = os.environ.get("SOURCE_DIR", None)
         # source_dir = "/Users/kylinye/Workspace/UGit/tools/miniprogram-ci/wxapp-2048-master"
-        work_dir = os.environ.get("RESULT_DIR", None)
-        # work_dir = "workdir"
         print("[debug] source_dir: %s" % source_dir)
         # 其他参数从task_request.json文件获取
         task_params = self.__get_task_params()
@@ -45,8 +44,12 @@ class MiniprogramCI(object):
         rules = task_params["rules"]
 
         result = []
-        result_path = os.path.join(work_dir, "result.json")
-        error_output = os.path.join(work_dir, "error.json")
+        results_dir = "results/"
+        if os.path.exists(results_dir):
+            shutil.rmtree(results_dir)
+        os.mkdir(results_dir)
+        result_path = os.path.join(results_dir, "result.json")
+        error_output = os.path.join(results_dir, "error.json")
 
         cmd = [
             "miniprogram-ci",
